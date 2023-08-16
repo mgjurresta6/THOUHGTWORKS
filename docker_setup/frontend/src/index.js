@@ -102,7 +102,7 @@ function App() {
             />
           </FormControl>
           </Grid>
-          <Grid templateColumns='repeat(1, 2fr)' gap={6} marginLeft='25px' marginRight='25px'>
+          <Grid align='center'>
           <Button type="submit" mt={4} colorScheme="blue">
             Enviar
           </Button>
