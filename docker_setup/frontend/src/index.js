@@ -6,8 +6,6 @@ import {
   FormLabel,
   Input,
   Button,
-  HStack,
-  VStack,
   Grid,
   ChakraProvider,
 } from '@chakra-ui/react';
@@ -22,7 +20,6 @@ function App() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Aquí puedes realizar la lógica para enviar o procesar el formulario
     console.log('Dirección con número de casa:', address1);
     console.log('Dirección con calle transversal:', address2);
     console.log('Dirección de referencia:', address3);
@@ -36,6 +33,7 @@ function App() {
       <div className="page-container">
       <div className="custom-form" >
       <form className="custom-form" onSubmit={handleSubmit}>
+
       <Grid templateColumns='repeat(2, 1fr)' gap={6} marginLeft='25px' marginRight='25px'>
           <FormControl isRequired>
             <FormLabel>Dirección con número de casa</FormLabel>
@@ -102,7 +100,7 @@ function App() {
             />
           </FormControl>
           </Grid>
-          <Grid templateColumns='repeat(1, 2fr)' gap={6} marginLeft='25px' marginRight='25px'>
+          <Grid align='center'>
           <Button type="submit" mt={4} colorScheme="blue">
             Enviar
           </Button>
