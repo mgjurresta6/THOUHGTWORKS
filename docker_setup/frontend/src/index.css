@@ -1,0 +1,57 @@
+
+.page-container {
+  
+  justify-content: center; 
+ 
+  min-height: 100vh; 
+  background-color: white; 
+  position: relative; 
+}
+
+/* Barras laterales azules */
+.page-container::before,
+.page-container::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 50px; 
+  background-color: #3498db;
+}
+
+.page-container::before {
+  left: 5px; 
+}
+
+.page-container::after {
+  right: 5px; 
+}
+
+/* Estilos para el formulario */
+.custom-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+  padding: 0 20px; 
+}
+
+/* Estilos para cada campo de dirección */
+.custom-form .chakra-formcontrol {
+  grid-template-columns:repeat(2, 1fr);
+  gap: 6;
+  margin-Left:25px;
+  margin-right:25px;
+
+}
+
+/* Estilos para las etiquetas de los campos */
+.custom-form .chakra-formcontrol label {
+  white-space: nowrap; 
+}
+
+/* Estilos para la fila de inputs */
+.input-row {
+  display: flex;
+  justify-content: center; 
+  align-items: center; 
+}
