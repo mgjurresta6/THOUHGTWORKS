@@ -1,11 +1,11 @@
 
 .page-container {
-  
   justify-content: center; 
- 
   min-height: 100vh; 
   background-color: white; 
   position: relative; 
+  border-top: 10px solid #ffffff; /* Borde superior de 10px */
+    border-bottom: 10px solid #ffffff; /* Borde inferior de 10px */
 }
 
 /* Barras laterales azules */
@@ -54,4 +54,8 @@
   display: flex;
   justify-content: center; 
   align-items: center; 
+}
+
+.texto{
+  margin-Left:75px;
 }
