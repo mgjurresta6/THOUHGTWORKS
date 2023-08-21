@@ -34,26 +34,30 @@ function App() {
     const inputValue = event.target.value;
 
     // Elimina caracteres no alfabéticos y limita la longitud a 100 caracteres
-    const cleanValue = inputValue.replace(/[^A-Za-z ]/g, '').slice(0, 100) };
+    const cleanValue = inputValue.replace(/[^A-Za-z ]/g, '').slice(0, 100);
+
+    setterFunction(cleanValue);
+  };
 
   const handleDocumentChange = (newValue) => {
     setSelectedDocument(newValue);
     setDocumentNumber('');
   };
 
-  const handleDocumentNumberChange = (event) => {
-    let inputValue = event.target.value;
-    const maxDigits = selectedDocument === '1' ? 10 : 50;
-    const maxDigitsAllowed = 9; // Máximo de 9 dígitos
-    inputValue = inputValue.replace(/\D/g, '');
 
+  const handleDocumentNumberChange = (event) => {
+    let inputValue = event.target.value.replace(/[^0-9]/g, '');
+
+    // Obtener el máximo de dígitos permitidos según el tipo de documento
+    const maxDigits = selectedDocument === '1' ? 10 : 50;
+
+    // Limitar la longitud del valor según el máximo de dígitos
     if (inputValue.length > maxDigits) {
       inputValue = inputValue.slice(0, maxDigits);
-    };
-  if (inputValue.length > maxDigitsAllowed) {
-      inputValue = inputValue.slice(0, maxDigitsAllowed);
-    };
-
+    }
+    /*if (inputValue.length > maxDigitsAllowed) {
+        inputValue = inputValue.slice(0, maxDigitsAllowed);
+      };*/
     setDocumentNumber(inputValue);
   };
 
@@ -79,94 +83,94 @@ function App() {
   };
   return (
     <ChakraProvider>
-      
-            <Card
-              direction={{ base: 'column', sm: 'row' }}
-              overflow='hidden'
-              variant='outline'
-            >
-              <Image
-                marginLeft='50px'
-                objectFit='cover'
-                maxW={{ base: '200%', sm: '300px' }}
-                src='https://yavirac.edu.ec/img/Logo%20Yavirac.png'
-                alt='FORMATO UNICO DE DENUNCIA'
-              />
-              
-              <Stack>
-                
-                <CardBody color='#1465bb'>
-                  <Heading size='md'>FORMATO UNICO DE DENUNCIA</Heading>
 
-                  <Text py='2'>
-                    JUNTA METROPOLITANA DE PROTECCION DE DERECHOS DE LA NIÑEZ Y ADOLECENCIA
-                  </Text>
-                </CardBody>
-                <CardFooter>
-                  <RadioGroup defaultValue='1'>
-                    <Stack spacing={4} direction='row'>
-                      <Radio value='1'>CENTRO</Radio>
-                      <Radio value='2'>DELICIA</Radio>
-                      <Radio value='3'>CALDERON</Radio>
-                      <Radio value='4'>QUITUMBE</Radio>
-                    </Stack>
-                  </RadioGroup>
-                </CardFooter>
+      <Card
+        direction={{ base: 'column', sm: 'row' }}
+        overflow='hidden'
+        variant='outline'
+      >
+        <Image
+          marginLeft='50px'
+          objectFit='cover'
+          maxW={{ base: '200%', sm: '300px' }}
+          src='https://yavirac.edu.ec/img/Logo%20Yavirac.png'
+          alt='FORMATO UNICO DE DENUNCIA'
+        />
+
+        <Stack>
+
+          <CardBody color='#1465bb'>
+            <Heading size='md'>FORMATO UNICO DE DENUNCIA</Heading>
+
+            <Text py='2'>
+              JUNTA METROPOLITANA DE PROTECCION DE DERECHOS DE LA NIÑEZ Y ADOLECENCIA
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <RadioGroup defaultValue='1'>
+              <Stack spacing={4} direction='row'>
+                <Radio value='1'>CENTRO</Radio>
+                <Radio value='2'>DELICIA</Radio>
+                <Radio value='3'>CALDERON</Radio>
+                <Radio value='4'>QUITUMBE</Radio>
               </Stack>
-            </Card>
-            <div className="page-container">
+            </RadioGroup>
+          </CardFooter>
+        </Stack>
+      </Card>
+      <div className="page-container">
         <div className="custom-from">
           <form className='custom-from' onSubmit={handleSubmit}>
             <p className='texto'>1.IDENTIFICACIÓN DE LA PERSONA DENUNCIANTE</p>
             <Grid templateColumns='repeat(2, 1fr)' gap={6} marginLeft='75px' marginRight='75px'>
-              
-            <FormControl isRequired>
-          <FormLabel>Nombres:</FormLabel>
-          <Input
-            placeholder='Nombres'
-            value={address7}
-            type='text'
-            maxLength={100}
-            onChange={(e) => handleNamesChange(e, setAddress7)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Apellidos:</FormLabel>
-          <Input
-            placeholder='Apellidos'
-            value={address8}
-            type='text'
-            maxLength={100}
-            onChange={(e) => handleNamesChange(e, setAddress8)}
-          />
-        </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel>Nombres:</FormLabel>
+                <Input
+                  placeholder='Nombres'
+                  value={address7}
+                  type='text'
+                  maxLength={100}
+                  onChange={(e) => handleNamesChange(e, setAddress7)}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Apellidos:</FormLabel>
+                <Input
+                  placeholder='Apellidos'
+                  value={address8}
+                  type='text'
+                  maxLength={100}
+                  onChange={(e) => handleNamesChange(e, setAddress8)}
+                />
+              </FormControl>
             </Grid>
             <Grid templateColumns='repeat(2, 1fr)' gap={6} marginLeft='75px' marginRight='75px'>
-            <GridItem>
-        <FormControl isRequired>
-          <FormLabel>Documentos de Identidad:</FormLabel>
-          <RadioGroup value={selectedDocument} onChange={handleDocumentChange}>
-            <Stack spacing={5} direction='row'>
-              <Radio colorScheme='blue' value='1'>
-                Cédula
-              </Radio>
-              <Radio colorScheme='blue' value='2'>
-                Pasaporte
-              </Radio>
-            </Stack>
-          </RadioGroup>
-        </FormControl>
-      </GridItem>
-      <GridItem>
-        <FormControl isRequired>
-          <FormLabel>Número de Documento</FormLabel>
-          <Input
-            placeholder='Número de Documento'
-            value={documentNumber}
-            onChange={handleDocumentNumberChange}
-          />
-        </FormControl>
-      </GridItem>
+              <GridItem>
+                <FormControl isRequired>
+                  <FormLabel>Documentos de Identidad:</FormLabel>
+                  <RadioGroup value={selectedDocument} onChange={handleDocumentChange}>
+                    <Stack spacing={5} direction='row'>
+                      <Radio colorScheme='blue' value='1'>
+                        Cédula
+                      </Radio>
+                      <Radio colorScheme='blue' value='2'>
+                        Pasaporte
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+              </GridItem>
+              <GridItem>
+                <FormControl isRequired>
+                  <FormLabel>Número de Documento</FormLabel>
+                  <Input
+                    placeholder='Número de Documento'
+                    value={documentNumber}
+                    onChange={handleDocumentNumberChange}
+                  />
+                </FormControl>
+              </GridItem>
             </Grid>
 
             <Grid templateColumns='repeat(2, 1fr)' gap={6} marginLeft='75px' marginRight='75px'>
@@ -249,8 +253,18 @@ function App() {
               <FormControl isRequired>
                 <FormLabel>Número de celular de contacto:</FormLabel>
                 <InputGroup>
+                
                   <InputLeftAddon children='+593' />
-                  <Input type='tel' value={addreess11} maxLength={10} onChange={(e) => setAddress11(e.target.value)} placeholder='Número de Celular' />
+                  <Input
+                    type='tel'
+                    value={addreess11}
+                    maxLength={10} // Limita la longitud a 10 caracteres
+                    onChange={(e) => {
+                      const inputValue = e.target.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                      setAddress11(inputValue);
+                    }}
+                    placeholder='Número de Celular'
+                  />
                 </InputGroup>
               </FormControl>
             </Grid>
@@ -262,7 +276,14 @@ function App() {
                     <InputLeftElement pointerEvents='none'>
                       <PhoneIcon color='gray.300' />
                     </InputLeftElement>
-                    <Input type='tel' value={addreess12} maxLength={9} onChange={(e) => setAddress12(e.target.value)} placeholder='Número Telefonico' />
+                    <Input
+                     type='tel' 
+                     value={addreess12} 
+                     maxLength={9} 
+                     onChange={(e) => 
+                      {const inputValue = e.target.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                     setAddress12(inputValue);
+                   }} placeholder='Número Telefonico' />
                   </InputGroup>
                 </FormControl>
               </GridItem>
@@ -296,11 +317,11 @@ function App() {
               </GridItem>
             </Grid>
             <Grid >
-            <GridItem  alignContent='center'>
-              <Button left='47%' width='120px' height='50px' type="submit" mt={4} colorScheme="blue">
-                Enviar
-              </Button>
-              
+              <GridItem alignContent='center'>
+                <Button left='47%' width='120px' height='50px' type="submit" mt={4} colorScheme="blue">
+                  Enviar
+                </Button>
+
               </GridItem>
             </Grid>
           </form>
