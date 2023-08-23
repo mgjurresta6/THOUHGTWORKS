@@ -7,9 +7,12 @@ import { Heading } from '@chakra-ui/react';
 import { Text } from '@chakra-ui/react';
 import { Radio, RadioGroup } from '@chakra-ui/react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import './index';
 import { PhoneIcon } from '@chakra-ui/icons'
-
+import './index.css';
+import SegForm from './segForm';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function App() {
   const [address1, setAddress1] = useState('');
@@ -20,42 +23,64 @@ function App() {
   const [address6, setAddress6] = useState('');
   const [address7, setAddress7] = useState('');
   const [address8, setAddress8] = useState('');
-  const [addreess9, setAddreess9] = useState('');
-  const [addreess10, setAddress10] = useState('');
-  const [addreess11, setAddress11] = useState('');
-  const [addreess12, setAddress12] = useState('');
-  const [addreess13, setAddress13] = useState('');
-  const [addreess14, setAddress14] = useState('');
-  const [addreess15, setAddress15] = useState('');
+  const [address9, setAddress9] = useState('');
+  const [address10, setAddress10] = useState('');
+  const [address11, setAddress11] = useState('');
+  const [address12, setAddress12] = useState('');
+  const [address13, setAddress13] = useState('');
+  const [address14, setAddress14] = useState('');
+  const [address15, setAddress15] = useState('');
   const [selectedDocument, setSelectedDocument] = useState('2');
   const [documentNumber, setDocumentNumber] = useState('');
-
+  
   const handleNamesChange = (event, setterFunction) => {
     const inputValue = event.target.value;
 
     // Elimina caracteres no alfabéticos y limita la longitud a 100 caracteres
-    const cleanValue = inputValue.replace(/[^A-Za-z ]/g, '').slice(0, 100) };
+    const cleanValue = inputValue.replace(/[^A-Za-z\u00C0-\u00FF ]/g, '').slice(0, 100);
+
+    setterFunction(cleanValue);
+  };
+  const [navigateToSegForm, setNavigateToSegForm] = useState(false);
+  const handleFormSubmit = (e) => {
+    e.preventDefault();
+
+    // Verificar que los campos estén llenos antes de redirigir
+    if (address1 && address2 && address3 && address4
+      && address5 && address6 && address7 && address8
+      && address10 && address11 && address12
+      && address13 && address14 && address15 && documentNumber
+      && selectedDocument
+    ) {
+      // Redirigir a la nueva pantalla
+      setNavigateToSegForm(true); // Cambiar a la ruta correcta
+    } else {
+      // Mostrar un mensaje de error o hacer algo si los campos no están llenos
+      console.log('Por favor, complete todos los campos.');
+    }
+  };
+
 
   const handleDocumentChange = (newValue) => {
     setSelectedDocument(newValue);
     setDocumentNumber('');
   };
 
-  const handleDocumentNumberChange = (event) => {
-    let inputValue = event.target.value;
-    const maxDigits = selectedDocument === '1' ? 10 : 50;
-    const maxDigitsAllowed = 9; // Máximo de 9 dígitos
-    inputValue = inputValue.replace(/\D/g, '');
 
+  const handleDocumentNumberChange = (event) => {
+    let inputValue = event.target.value.replace(/[^0-9]/g, '');
+
+    // Obtener el máximo de dígitos permitidos según el tipo de documento
+    const maxDigits = selectedDocument === '1' ? 10 : 50;
+
+    // Limitar la longitud del valor según el máximo de dígitos
     if (inputValue.length > maxDigits) {
       inputValue = inputValue.slice(0, maxDigits);
-    };
-  if (inputValue.length > maxDigitsAllowed) {
-      inputValue = inputValue.slice(0, maxDigitsAllowed);
-    };
-
+    }
     setDocumentNumber(inputValue);
-  };
+  }
+    ;
+
 
 
   const handleSubmit = (e) => {
@@ -66,107 +91,108 @@ function App() {
     console.log('Dirección de referencia:', address4);
     console.log('Dirección de parroquia', address5);
     console.log('Dirección de sector', address6);
-    console.log('Nombres', addreess7);
-    console.log('Apellidos', addreess8);
-    console.log('Numero de Identificador', addreess9);
-    console.log('Dirección de su barrio', addreess10);
-    console.log('Numero de celular de contacto', addreess11);
-    console.log('Numero de telefono de domicilio', addreess12);
-    console.log('Email', addreess13);
-    console.log('Numero Casilla Judicial', addreess14);
-    console.log('Relacion o parentesco NNA en situacion de riesgo y/o vulnerabilidad', addreess15);
+    console.log('Nombres', address7);
+    console.log('Apellidos', address8);
+    console.log('Numero de Identificador', address9);
+    console.log('Dirección de su barrio', address10);
+    console.log('Numero de celular de contacto', address11);
+    console.log('Numero de telefono de domicilio', address12);
+    console.log('Email', address13);
+    console.log('Numero Casilla Judicial', address14);
+    console.log('Relacion o parentesco NNA en situacion de riesgo y/o vulnerabilidad', address15);
 
   };
   return (
-    <ChakraProvider>
-      
-            <Card
-              direction={{ base: 'column', sm: 'row' }}
-              overflow='hidden'
-              variant='outline'
-            >
-              <Image
-                marginLeft='50px'
-                objectFit='cover'
-                maxW={{ base: '200%', sm: '300px' }}
-                src='https://yavirac.edu.ec/img/Logo%20Yavirac.png'
-                alt='FORMATO UNICO DE DENUNCIA'
-              />
-              
-              <Stack>
-                
-                <CardBody color='#1465bb'>
-                  <Heading size='md'>FORMATO UNICO DE DENUNCIA</Heading>
 
-                  <Text py='2'>
-                    JUNTA METROPOLITANA DE PROTECCION DE DERECHOS DE LA NIÑEZ Y ADOLECENCIA
-                  </Text>
-                </CardBody>
-                <CardFooter>
-                  <RadioGroup defaultValue='1'>
-                    <Stack spacing={4} direction='row'>
-                      <Radio value='1'>CENTRO</Radio>
-                      <Radio value='2'>DELICIA</Radio>
-                      <Radio value='3'>CALDERON</Radio>
-                      <Radio value='4'>QUITUMBE</Radio>
-                    </Stack>
-                  </RadioGroup>
-                </CardFooter>
+    <ChakraProvider>
+
+      <Card
+        direction={{ base: 'column', sm: 'row' }}
+        overflow='hidden'
+        variant='outline'
+      >
+        <Image
+          marginLeft='50px'
+          objectFit='cover'
+          maxW={{ base: '200%', sm: '300px' }}
+          src='https://yavirac.edu.ec/img/Logo%20Yavirac.png'
+          alt='FORMATO UNICO DE DENUNCIA'
+        />
+
+        <Stack>
+
+          <CardBody color='#1465bb'>
+            <Heading size='md'>FORMATO UNICO DE DENUNCIA</Heading>
+
+            <Text py='2'>
+              JUNTA METROPOLITANA DE PROTECCION DE DERECHOS DE LA NIÑEZ Y ADOLECENCIA
+            </Text>
+          </CardBody>
+          <CardFooter>
+            <RadioGroup defaultValue='1'>
+              <Stack spacing={4} direction='row'>
+                <Radio value='1'>CENTRO</Radio>
+                <Radio value='2'>DELICIA</Radio>
+                <Radio value='3'>CALDERON</Radio>
+                <Radio value='4'>QUITUMBE</Radio>
               </Stack>
-            </Card>
-            <div className="page-container">
+            </RadioGroup>
+          </CardFooter>
+        </Stack>
+      </Card>
+      <div className="page-container">
         <div className="custom-from">
-          <form className='custom-from' onSubmit={handleSubmit}>
+          <form className='custom-from' onSubmit={handleFormSubmit}>
             <p className='texto'>1.IDENTIFICACIÓN DE LA PERSONA DENUNCIANTE</p>
             <Grid templateColumns='repeat(2, 1fr)' gap={6} marginLeft='75px' marginRight='75px'>
-              
-            <FormControl isRequired>
-          <FormLabel>Nombres:</FormLabel>
-          <Input
-            placeholder='Nombres'
-            value={address7}
-            type='text'
-            maxLength={100}
-            onChange={(e) => handleNamesChange(e, setAddress7)}
-          />
-        </FormControl>
-        <FormControl isRequired>
-          <FormLabel>Apellidos:</FormLabel>
-          <Input
-            placeholder='Apellidos'
-            value={address8}
-            type='text'
-            maxLength={100}
-            onChange={(e) => handleNamesChange(e, setAddress8)}
-          />
-        </FormControl>
+
+              <FormControl isRequired>
+                <FormLabel>Nombres:</FormLabel>
+                <Input
+                  placeholder='Nombres'
+                  value={address7}
+                  type='text'
+                  maxLength={100}
+                  onChange={(e) => handleNamesChange(e, setAddress7)}
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel>Apellidos:</FormLabel>
+                <Input
+                  placeholder='Apellidos'
+                  value={address8}
+                  type='text'
+                  maxLength={100}
+                  onChange={(e) => handleNamesChange(e, setAddress8)}
+                />
+              </FormControl>
             </Grid>
             <Grid templateColumns='repeat(2, 1fr)' gap={6} marginLeft='75px' marginRight='75px'>
-            <GridItem>
-        <FormControl isRequired>
-          <FormLabel>Documentos de Identidad:</FormLabel>
-          <RadioGroup value={selectedDocument} onChange={handleDocumentChange}>
-            <Stack spacing={5} direction='row'>
-              <Radio colorScheme='blue' value='1'>
-                Cédula
-              </Radio>
-              <Radio colorScheme='blue' value='2'>
-                Pasaporte
-              </Radio>
-            </Stack>
-          </RadioGroup>
-        </FormControl>
-      </GridItem>
-      <GridItem>
-        <FormControl isRequired>
-          <FormLabel>Número de Documento</FormLabel>
-          <Input
-            placeholder='Número de Documento'
-            value={documentNumber}
-            onChange={handleDocumentNumberChange}
-          />
-        </FormControl>
-      </GridItem>
+              <GridItem>
+                <FormControl isRequired>
+                  <FormLabel>Documentos de Identidad:</FormLabel>
+                  <RadioGroup value={selectedDocument} onChange={handleDocumentChange}>
+                    <Stack spacing={5} direction='row'>
+                      <Radio colorScheme='blue' value='1'>
+                        Cédula
+                      </Radio>
+                      <Radio colorScheme='blue' value='2'>
+                        Pasaporte
+                      </Radio>
+                    </Stack>
+                  </RadioGroup>
+                </FormControl>
+              </GridItem>
+              <GridItem>
+                <FormControl isRequired>
+                  <FormLabel>Número de Documento</FormLabel>
+                  <Input
+                    placeholder='Número de Documento'
+                    value={documentNumber}
+                    onChange={handleDocumentNumberChange}
+                  />
+                </FormControl>
+              </GridItem>
             </Grid>
 
             <Grid templateColumns='repeat(2, 1fr)' gap={6} marginLeft='75px' marginRight='75px'>
@@ -241,7 +267,7 @@ function App() {
                 <Input
                   type="text"
                   maxLength={100}
-                  value={addreess10}
+                  value={address10}
                   onChange={(e) => setAddress10(e.target.value)}
                   placeholder="Ingresa la dirección"
                 />
@@ -249,8 +275,18 @@ function App() {
               <FormControl isRequired>
                 <FormLabel>Número de celular de contacto:</FormLabel>
                 <InputGroup>
+
                   <InputLeftAddon children='+593' />
-                  <Input type='tel' value={addreess11} maxLength={10} onChange={(e) => setAddress11(e.target.value)} placeholder='Número de Celular' />
+                  <Input
+                    type='tel'
+                    value={address11}
+                    maxLength={10} // Limita la longitud a 10 caracteres
+                    onChange={(e) => {
+                      const inputValue = e.target.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                      setAddress11(inputValue);
+                    }}
+                    placeholder='Número de Celular'
+                  />
                 </InputGroup>
               </FormControl>
             </Grid>
@@ -262,14 +298,21 @@ function App() {
                     <InputLeftElement pointerEvents='none'>
                       <PhoneIcon color='gray.300' />
                     </InputLeftElement>
-                    <Input type='tel' value={addreess12} maxLength={9} onChange={(e) => setAddress12(e.target.value)} placeholder='Número Telefonico' />
+                    <Input
+                      type='tel'
+                      value={address12}
+                      maxLength={9}
+                      onChange={(e) => {
+                        const inputValue = e.target.value.replace(/\D/g, ''); // Elimina caracteres no numéricos
+                        setAddress12(inputValue);
+                      }} placeholder='Número Telefonico' />
                   </InputGroup>
                 </FormControl>
               </GridItem>
               <GridItem  >
                 <FormControl isRequired>
                   <FormLabel>Email:</FormLabel>
-                  <Input type='email' value={addreess13} maxLength={50} onChange={(e) => setAddress13(e.target.value)} placeholder='Escriba su correo electronico @.com' />
+                  <Input type='email' value={address13} maxLength={50} onChange={(e) => setAddress13(e.target.value)} placeholder='Escriba su correo electronico @.com' />
                 </FormControl>
               </GridItem>
             </Grid>
@@ -278,14 +321,14 @@ function App() {
                 <FormControl isRequired>
                   <FormLabel>Número Casilla Judicial:</FormLabel>
                   <InputGroup>
-                    <Input type='numeric' value={addreess14} maxLength={10} onChange={(e) => setAddress14(e.target.value)} placeholder='Numero de Casilla Judicial' />
+                    <Input type='numeric' value={address14} maxLength={10} onChange={(e) => setAddress14(e.target.value)} placeholder='Numero de Casilla Judicial' />
                   </InputGroup>
                 </FormControl>
               </GridItem>
               <GridItem  >
                 <FormControl isRequired>
                   <FormLabel>Relación o parentesco NNA en situación de riesgo y/o vulnerabilidad</FormLabel>
-                  <Select value={addreess15} onChange={(e) => setAddress15(e.target.value)} placeholder='Seleccionar opcion'>
+                  <Select value={address15} onChange={(e) => setAddress15(e.target.value)} placeholder='Seleccionar opcion'>
                     <option value='option1'>Padre</option>
                     <option value='option2'>Tío/a</option>
                     <option value='option3'>Abuelo/a</option>
@@ -296,19 +339,40 @@ function App() {
               </GridItem>
             </Grid>
             <Grid >
-            <GridItem  alignContent='center'>
-              <Button left='47%' width='120px' height='50px' type="submit" mt={4} colorScheme="blue">
-                Enviar
-              </Button>
-              
+              <GridItem alignContent='center'>
+              <Link to="/segForm">
+      <Button
+        left='47%'
+        width='120px'
+        height='50px'
+        type="submit"
+        mt={4}
+        colorScheme="blue"
+      >
+        Enviar
+      </Button>
+    </Link>
               </GridItem>
             </Grid>
           </form>
         </div>
       </div>
+
+    </ChakraProvider>
+
+  );
+}
+function AppWithRouter() {
+  return (
+    <ChakraProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />} />
+          <Route path="/segForm" element={<SegForm />} />
+        </Routes>
+      </BrowserRouter>
     </ChakraProvider>
   );
 }
-
-export default App;
-ReactDOM.render(<App />, document.getElementById('root'));
+export default AppWithRouter;
+ReactDOM.render(<AppWithRouter />, document.getElementById('root'));
